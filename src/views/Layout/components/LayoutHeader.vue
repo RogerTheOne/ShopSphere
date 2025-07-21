@@ -1,4 +1,14 @@
 <script setup>
+  import { getCategoryAPI } from '@/apis/layout'
+  import { onMounted, ref } from 'vue'
+
+  const categoryList = ref([])
+  const getCategory = async () => {
+    const res = await getCategoryAPI()
+    categoryList.value = res.result
+  }
+
+  onMounted(() => getCategory())
 
 </script>
 
@@ -9,12 +19,10 @@
         <RouterLink to="/">ShopSphere</RouterLink>
       </h1>
       <ul class="app-header-nav">
-        <li class="home">
-          <RouterLink to="/">Main</RouterLink>
+        <li class="home" v-for="item in categoryList" :key="item.id">
+          <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
-        <li> <RouterLink to="/">Home</RouterLink> </li>
-        <li> <RouterLink to="/">Food</RouterLink> </li>
-        <li> <RouterLink to="/">Cloth</RouterLink> </li>
+        
       </ul>
       <div class="search">
         <i class="iconfont icon-search"></i>
