@@ -6,6 +6,14 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
+import {getCategoryAPI} from '@/apis/testAPI'
+getCategoryAPI().then((res: any) =>{
+    console.log(res);
+    
+}
+
+)
+
 const app = createApp(App)
 
 app.use(createPinia())
