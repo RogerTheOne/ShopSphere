@@ -4,11 +4,17 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
+  <div class="test">test scss</div>
   
 
   <RouterView />
 </template>
 
+<style scoped lang="scss">
+.test{
+  color: $priceColor;
+}
+</style>
 <style scoped>
 header {
   line-height: 1.5;
