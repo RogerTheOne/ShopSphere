@@ -11,12 +11,12 @@
           <li>
             <el-popconfirm title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
               <template #reference>
-                <a href="javascript:;">退出登录</a>
+                <a href="javascript:;">Sign out</a>
               </template>
             </el-popconfirm>
           </li>
-          <li><a href="javascript:;">我的订单</a></li>
-          <li><a href="javascript:;">会员中心</a></li>
+          <li><a href="javascript:;">My Order</a></li>
+          <li><a href="javascript:;">My Account</a></li>
         </template>
         <template v-else>
           <li><a href="javascript:;">请先登录</a></li>

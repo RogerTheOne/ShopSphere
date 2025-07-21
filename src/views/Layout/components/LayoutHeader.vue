@@ -6,19 +6,19 @@
   <header class='app-header'>
     <div class="container">
       <h1 class="logo">
-        <RouterLink to="/">小兔鲜</RouterLink>
+        <RouterLink to="/">ShopSphere</RouterLink>
       </h1>
       <ul class="app-header-nav">
         <li class="home">
-          <RouterLink to="/">首页</RouterLink>
+          <RouterLink to="/">Main</RouterLink>
         </li>
-        <li> <RouterLink to="/">居家</RouterLink> </li>
-        <li> <RouterLink to="/">美食</RouterLink> </li>
-        <li> <RouterLink to="/">服饰</RouterLink> </li>
+        <li> <RouterLink to="/">Home</RouterLink> </li>
+        <li> <RouterLink to="/">Food</RouterLink> </li>
+        <li> <RouterLink to="/">Cloth</RouterLink> </li>
       </ul>
       <div class="search">
         <i class="iconfont icon-search"></i>
-        <input type="text" placeholder="搜一搜">
+        <input type="text" placeholder="Search">
       </div>
       <!-- 头部购物车 -->
       
