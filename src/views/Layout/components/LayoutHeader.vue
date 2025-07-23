@@ -1,38 +1,35 @@
-<script setup>
-  import { getCategoryAPI } from '@/apis/layout'
-  import { onMounted, ref } from 'vue'
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { useCategoryStore } from '@/stores/category'
 
-  const categoryList = ref([])
-  const getCategory = async () => {
-    const res = await getCategoryAPI()
-    categoryList.value = res.result
-  }
+const categoryStore = useCategoryStore()
 
-  onMounted(() => getCategory())
-
+onMounted(() => {
+  categoryStore.fetchCategory()
+})
 </script>
 
 <template>
-  <header class='app-header'>
+  <header class="app-header">
     <div class="container">
       <h1 class="logo">
         <RouterLink to="/">ShopSphere</RouterLink>
       </h1>
+      <!-- 动态渲染导航 -->
       <ul class="app-header-nav">
-        <li class="home" v-for="item in categoryList" :key="item.id">
+        <li v-for="item in categoryStore.categoryList" :key="item.id">
           <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
-        
       </ul>
+
       <div class="search">
         <i class="iconfont icon-search"></i>
         <input type="text" placeholder="Search">
       </div>
-      <!-- 头部购物车 -->
-      
     </div>
   </header>
 </template>
+
 
 
 <style scoped lang='scss'>
@@ -57,16 +54,18 @@
   }
 
   .app-header-nav {
-    width: 820px;
     display: flex;
     padding-left: 40px;
     position: relative;
     z-index: 998;
+    width: auto; /* ✅ 让它根据内容自适应 */
+    margin-right: 40px; /* ✅ 给 search 预留间距 */
   
     li {
       margin-right: 40px;
-      width: 38px;
+      width: auto; // ✅ 删除固定宽度
       text-align: center;
+      white-space: nowrap; // ✅ 防止英文换行
   
       a {
         font-size: 16px;
@@ -88,20 +87,24 @@
   }
 
   .search {
-    width: 170px;
+    width: 200px; /* ✅ 给足空间 */
     height: 32px;
     position: relative;
     border-bottom: 1px solid #e7e7e7;
-    line-height: 32px;
+    display: flex; /* ✅ 改用 flex 对齐图标和输入框 */
+    align-items: center;
 
     .icon-search {
       font-size: 18px;
       margin-left: 5px;
+      margin-right: 5px; /* ✅ 给 input 留空间 */
     }
 
     input {
-      width: 140px;
-      padding-left: 5px;
+      flex: 1; /* ✅ 自动填充剩余空间 */
+      border: none;
+      outline: none;
+      font-size: 14px;
       color: #666;
     }
   }

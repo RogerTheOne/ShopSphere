@@ -1,53 +1,36 @@
-<script setup>
+<script setup lang="ts">
 import { useScroll } from '@vueuse/core'
+import { useCategoryStore } from '@/stores/category'
+import { onMounted } from 'vue'
+
 const { y } = useScroll(window)
+const categoryStore = useCategoryStore()
+
+onMounted(() => {
+  categoryStore.fetchCategory()
+})
 </script>
+
 
 <template>
   <div class="app-header-sticky" :class="{ show: y > 78 }">
     <div class="container">
       <RouterLink class="logo" to="/" />
-      <!-- 导航区域 -->
-      <ul class="app-header-nav ">
-        <li class="home">
-          <RouterLink to="/">首页</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">居家</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">美食</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">服饰</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">母婴</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">个护</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">严选</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">数码</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">运动</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">杂项</RouterLink>
+      <!-- 动态导航 -->
+      <ul class="app-header-nav">
+        <li v-for="item in categoryStore.categoryList" :key="item.id">
+          <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
-
+      <!-- 右侧区域 -->
       <div class="right">
-        <RouterLink to="/">品牌</RouterLink>
-        <RouterLink to="/">专题</RouterLink>
+        <RouterLink to="/">Brands</RouterLink>
+        <RouterLink to="/">Topics</RouterLink>
       </div>
     </div>
   </div>
 </template>
+
 
 
 <style scoped lang='scss'>
@@ -60,12 +43,9 @@ const { y } = useScroll(window)
   z-index: 999;
   background-color: #fff;
   border-bottom: 1px solid #e4e4e4;
-  // 此处为关键样式!!!
-  // 状态一：往上平移自身高度 + 完全透明
   transform: translateY(-100%);
   opacity: 0;
 
-  // 状态二：移除平移 + 完全不透明
   &.show {
     transition: all 0.3s linear;
     transform: none;
@@ -85,14 +65,12 @@ const { y } = useScroll(window)
   }
 
   .right {
-    width: 220px;
     display: flex;
     text-align: center;
     padding-left: 40px;
     border-left: 2px solid $xtxColor;
 
     a {
-      width: 38px;
       margin-right: 40px;
       font-size: 16px;
       line-height: 1;
@@ -105,7 +83,6 @@ const { y } = useScroll(window)
 }
 
 .app-header-nav {
-  width: 820px;
   display: flex;
   padding-left: 40px;
   position: relative;
@@ -113,13 +90,12 @@ const { y } = useScroll(window)
 
   li {
     margin-right: 40px;
-    width: 38px;
     text-align: center;
+    white-space: nowrap; // ✅ 防止英文换行
 
     a {
       font-size: 16px;
       line-height: 32px;
-      height: 32px;
       display: inline-block;
 
       &:hover {
@@ -134,4 +110,5 @@ const { y } = useScroll(window)
     }
   }
 }
+
 </style>
