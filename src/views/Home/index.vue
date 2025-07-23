@@ -4,6 +4,7 @@ import HomeBanner from './components/HomeBanner.vue'
 import HomeNew from './components/HomeNew.vue'
 import HomeHot from './components/HomeHot.vue'
 import homeProduct from './components/HomeProduct.vue'
+import HomePanel from './components/HomePanel.vue'
 </script>
 
 <template>
@@ -14,4 +15,14 @@ import homeProduct from './components/HomeProduct.vue'
   <HomeNew />
   <HomeHot />
   <homeProduct />
+  <HomePanel title="Fresh Finds">
+    <div>
+      fresh finds slot
+    </div>
+  </HomePanel>
+  <HomePanel title="Influencer Picks">
+    <div>
+      influencer picks slot
+    </div>
+  </HomePanel>
 </template>
