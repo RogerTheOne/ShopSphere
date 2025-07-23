@@ -1,25 +1,35 @@
-<script setup>
+<script setup lang="ts">
+import { useCategoryStore } from '@/stores/category'
+import { onMounted } from 'vue'
 
+const categoryStore = useCategoryStore()
+
+onMounted(() => {
+  categoryStore.fetchCategory()
+})
 </script>
+
 
 <template>
   <div class="home-category">
     <ul class="menu">
-      <li v-for="item in 9" :key="item">
-        <RouterLink to="/">居家</RouterLink>
-        <RouterLink v-for="i in 2" :key="i" to="/">南北干货</RouterLink>
-        <!-- 弹层layer位置 -->
+      <li v-for="item in categoryStore.categoryList" :key="item.id">
+        <!-- 一级分类 -->
+        <RouterLink to="/">{{ item.name }}</RouterLink>
+
+        <!-- 弹层 layer -->
         <div class="layer">
-          <h4>分类推荐 <small>根据您的购买或浏览记录推荐</small></h4>
+          <h4>
+            Category Recommendations
+            <small>Based on your browsing history</small>
+          </h4>
           <ul>
             <li v-for="i in 5" :key="i">
               <RouterLink to="/">
-                <img alt="" />
+                <img alt="Product" />
                 <div class="info">
-                  <p class="name ellipsis-2">
-                    男士外套
-                  </p>
-                  <p class="desc ellipsis">男士外套，冬季必选</p>
+                  <p class="name ellipsis-2">Sample Product</p>
+                  <p class="desc ellipsis">Great product description</p>
                   <p class="price"><i>¥</i>200.00</p>
                 </div>
               </RouterLink>
@@ -30,6 +40,7 @@
     </ul>
   </div>
 </template>
+
 
 
 <style scoped lang='scss'>
