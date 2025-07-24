@@ -5,3 +5,14 @@ export function getBannerAPI(): Promise<any> {
     url: 'home/banner'
   })
 }
+
+/**
+ * @description: 
+ * @param {*}
+ * @return {*}
+ */
+export const findNewAPI = (): any => {
+  return http({
+    url:'/home/new'
+  })
+}
