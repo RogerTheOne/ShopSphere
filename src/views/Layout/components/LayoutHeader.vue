@@ -15,10 +15,12 @@ onMounted(() => {
       <h1 class="logo">
         <RouterLink to="/">ShopSphere</RouterLink>
       </h1>
-      <!-- 动态渲染导航 -->
+      
       <ul class="app-header-nav">
         <li v-for="item in categoryStore.categoryList" :key="item.id">
-          <RouterLink to="/">{{ item.name }}</RouterLink>
+          <RouterLink active-class="active" :to="`/category/${item.id}`">
+            {{ item.name }}
+          </RouterLink>
         </li>
       </ul>
 

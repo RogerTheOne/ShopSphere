@@ -19,7 +19,7 @@ onMounted(() => {
       <!-- 动态导航 -->
       <ul class="app-header-nav">
         <li v-for="item in categoryStore.categoryList" :key="item.id">
-          <RouterLink to="/">{{ item.name }}</RouterLink>
+          <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         </li>
       </ul>
       <!-- 右侧区域 -->
