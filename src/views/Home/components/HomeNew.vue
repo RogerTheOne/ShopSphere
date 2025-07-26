@@ -1,41 +1,41 @@
 <script setup lang="ts">
 import HomePanel from './HomePanel.vue'
-import { findNewAPI } from '@/apis/home'
-import { ref, onMounted } from 'vue'
+
+
+import img1 from '@/assets/images/fresh1.jpg'
+import img2 from '@/assets/images/fresh2.jpg'
+import img3 from '@/assets/images/fresh3.jpg'
+import img4 from '@/assets/images/fresh4.jpg'
 
 // 映射表（中文 → 英文）
-const productMap: Record<string, { name: string; desc: string }> = {
-  '钻石陶瓷涂层多用锅18cm 小奶锅': { 
-    name: 'Diamond Ceramic Coated Multi-Purpose Pot 18cm', 
-    desc: 'Safe and durable, easy to clean' 
+const newList = [
+  {
+    id: 1,
+    picture: img1,
+    name: 'Vintage Computer 70s',
+    price: '$149.00'
   },
-  '伊海诗冬日出行多功能防风保暖围脖': { 
-    name: 'Inano Electric Tooth Polisher & Interdental Cleaner', 
-    desc: 'Protect your teeth with multiple modes' 
+  {
+    id: 2,
+    picture: img2,
+    name: 'Nike Runner 2025',
+    price: '$219.00'
   },
-  '亮碟多效合一洗涤块495g': {
-    name: 'Finish Powerball All-in-One Dishwasher Tabs 495g',
-    desc: 'Special for dishwashers, powerful stain removal'
+  {
+    id: 3,
+    picture: img3,
+    name: 'PlayStation Controller',
+    price: '$69.90'
   },
-  '日本冰块冰球制冰模具': {
-    name: 'Japanese Ice Ball Maker',
-    desc: 'Easy ice release with a single press'
+  {
+    id: 4,
+    picture: img4,
+    name: 'IPhone',
+    price: '$1199.00'
   }
+]
 
-}
 
-const newList = ref<any[]>([])
-
-const getNewList = async () => {
-  const res = await findNewAPI()
-  newList.value = res.result.map((item: any) => ({
-    ...item,
-    name: productMap[item.name]?.name || item.name,
-    desc: productMap[item.name]?.desc || item.desc
-  }))
-}
-
-onMounted(() => getNewList())
 </script>
 
 <template>
@@ -45,7 +45,7 @@ onMounted(() => getNewList())
         <RouterLink :to="`/detail/${item.id}`">
           <img :src="item.picture" alt="" />
           <p class="name">{{ item.name }}</p>
-          <p class="price">&yen;{{ item.price }}</p>
+          <p class="price">{{ item.price }}</p>
         </RouterLink>
       </li>
     </ul>
