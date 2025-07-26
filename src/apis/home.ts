@@ -1,8 +1,16 @@
 import http from '@/utils/http'
 
-export function getBannerAPI(): Promise<any> {
+interface BannerParams {
+  distributionSite?: string // 1: 默认首页，2: 商品页
+}
+
+export function getBannerAPI(params: BannerParams = {}): Promise<any> {
+  const { distributionSite = '1' } = params
   return http({
-    url: 'home/banner'
+    url: '/home/banner',
+    params: {
+      distributionSite
+    }
   })
 }
 
