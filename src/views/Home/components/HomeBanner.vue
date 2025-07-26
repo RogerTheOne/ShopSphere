@@ -6,14 +6,9 @@ const bannerList = [
   { id: 4, imgUrl: new URL('@/assets/images/banner_sport.jpg', import.meta.url).href },
   { id: 5, imgUrl: new URL('@/assets/images/banner_cloth2.jpg', import.meta.url).href },
 
-
-
-
-
 ]
 
 </script>
-
 
 <template>
   <div class="home-banner">
