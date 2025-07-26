@@ -16,9 +16,6 @@ import HomePanel from './components/HomePanel.vue'
   <HomeHot />
   <homeProduct />
   <HomePanel />
-  <HomePanel title="Influencer Picks">
-    <div>
-      influencer picks slot
-    </div>
-  </HomePanel>
+ 
+  
 </template>
