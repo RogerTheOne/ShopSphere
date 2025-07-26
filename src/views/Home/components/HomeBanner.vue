@@ -1,26 +1,25 @@
 <script setup>
-import { getBannerAPI } from '@/apis/home'
-import { onMounted, ref } from 'vue'
+const bannerList = [
+  { id: 1, imgUrl: new URL('@/assets/images/banner-1.jpg', import.meta.url).href },
+  { id: 2, imgUrl: new URL('@/assets/images/banner_food.jpg', import.meta.url).href },
+  { id: 3, imgUrl: new URL('@/assets/images/banner_home.jpg', import.meta.url).href },
+  { id: 4, imgUrl: new URL('@/assets/images/banner_sport.jpg', import.meta.url).href },
+  { id: 5, imgUrl: new URL('@/assets/images/banner_cloth2.jpg', import.meta.url).href },
 
-const bannerList = ref([])
 
-const getBanner = async () => {
-  const res = await getBannerAPI()
-  console.log(res)
-  bannerList.value = res.result
-}
 
-onMounted(() => getBanner())
+
+
+]
 
 </script>
 
 
-
 <template>
   <div class="home-banner">
-    <el-carousel height="500px">
+    <el-carousel height="700px" arrow="always">
       <el-carousel-item v-for="item in bannerList" :key="item.id">
-        <img :src="item.imgUrl" alt="">
+        <img :src="item.imgUrl" alt="banner" />
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -31,7 +30,7 @@ onMounted(() => getBanner())
 <style scoped lang='scss'>
 .home-banner {
   width: 1240px;
-  height: 500px;
+  height: 700px;
   position: absolute;
   left: 0;
   top: 0;
@@ -39,7 +38,7 @@ onMounted(() => getBanner())
 
   img {
     width: 100%;
-    height: 500px;
+    height: 700px;
   }
 }
 </style>

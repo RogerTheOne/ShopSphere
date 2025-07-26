@@ -46,7 +46,7 @@ onMounted(() => {
 <style scoped lang='scss'>
 .home-category {
   width: 250px;
-  height: 500px;
+  height: 700px;
   background: rgba(0, 0, 0, 0.8);
   position: relative;
   z-index: 99;
@@ -54,8 +54,8 @@ onMounted(() => {
   .menu {
     li {
       padding-left: 40px;
-      height: 55px;
-      line-height: 55px;
+      height: 78px;
+      line-height: 78px;
 
       &:hover {
         background: $xtxColor;
@@ -72,7 +72,7 @@ onMounted(() => {
 
       .layer {
         width: 990px;
-        height: 500px;
+        height: 700px;
         background: rgba(255, 255, 255, 0.8);
         position: absolute;
         left: 250px;
