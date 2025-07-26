@@ -15,11 +15,7 @@ import HomePanel from './components/HomePanel.vue'
   <HomeNew />
   <HomeHot />
   <homeProduct />
-  <HomePanel title="Fresh Finds">
-    <div>
-      fresh finds slot
-    </div>
-  </HomePanel>
+  <HomePanel />
   <HomePanel title="Influencer Picks">
     <div>
       influencer picks slot
