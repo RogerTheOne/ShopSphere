@@ -26,7 +26,6 @@ const getGoods = async () => {
 onMounted(() => getGoods())
 </script>
 
-
 <template>
   <div class="home-product">
     <HomePanel :title="cate.name" v-for="cate in goodsProduct" :key="cate.id">

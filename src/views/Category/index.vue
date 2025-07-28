@@ -5,32 +5,11 @@ import { watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { getBannerAPI } from '@/apis/home'
 import GoodsItem from '../Home/components/GoodsItem.vue'
+import { useBanner } from './composables/useBanner'
+import { useCategory } from './composables/useCategory'
+const { bannerList } = useBanner()
+const { categoryData } = useCategory()
 
-const categoryData = ref({})
-const route = useRoute()
-const getCategory = async () => {
-  const res = await getTopCategoryAPI(route.params.id)
-  categoryData.value = res.result
-}
-getCategory(route.params.id)
-
-watch(
-  () => route.params.id,
-  (newId) => {
-    getCategory(newId)
-  }
-)
-
-const bannerList = ref([])
-const getBanner = async () => {
-  const res = await getBannerAPI({
-    distributionSite: '2'
-  })
-  console.log(res)
-  bannerList.value = res.result
-}
-
-onMounted(() => getBanner())
 
 </script>
 
