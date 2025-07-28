@@ -34,7 +34,7 @@ onMounted(() => getGoods())
           <img :src="cate.picture" />
           <strong class="label">
             <span>{{ cate.name }}</span>
-            <span>{{ cate.saleInfo }}</span>
+            
           </strong>
         </RouterLink>
         <ul class="goods-list">

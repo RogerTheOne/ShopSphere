@@ -6,26 +6,32 @@ import GoodsItem from '../Home/components/GoodsItem.vue'
 const categoryData = ref({})
 const route = useRoute()
 const getCategoryData = async () => {
-  const res = await getCategoryFilterAPI(route.params.id)
-  categoryData.value = res.result
+    const res = await getCategoryFilterAPI(route.params.id)
+    categoryData.value = res.result
 }
 onMounted(() => getCategoryData())
 
 const goodList = ref([])
 const reqData = ref({
-  categoryId: route.params.id,
-  page: 1,
-  pageSize: 20,
-  sortField: 'publishTime'
+    categoryId: route.params.id,
+    page: 1,
+    pageSize: 20,
+    sortField: 'publishTime'
 })
 
 const getGoodList = async () => {
-  const res = await getSubCategoryAPI(reqData.value)
-  console.log(res)
-  goodList.value = res.result.items
+    const res = await getSubCategoryAPI(reqData.value)
+    console.log(res)
+    goodList.value = res.result.items
 }
-  
+
 onMounted(() => getGoodList())
+
+const tabChange = () => {
+  console.log('tab切换了', reqData.value.sortField)
+  reqData.value.page = 1
+  getGoodList()
+}
 
 </script>
 
@@ -42,14 +48,14 @@ onMounted(() => getGoodList())
             </el-breadcrumb>
         </div>
         <div class="sub-container">
-            <el-tabs>
+            <el-tabs v-model="reqData.sortField" @tab-change="tabChange">
                 <el-tab-pane label="Latest" name="publishTime"></el-tab-pane>
                 <el-tab-pane label="Order by Views" name="orderNum"></el-tab-pane>
                 <el-tab-pane label="Order by Ratings" name="evaluateNum"></el-tab-pane>
             </el-tabs>
             <div class="body">
                 <!-- 商品列表-->
-                 <GoodsItem v-for="goods in goodList" :goods="goods" :key="goods.id"/>
+                <GoodsItem v-for="goods in goodList" :goods="goods" :key="goods.id" />
 
             </div>
         </div>
