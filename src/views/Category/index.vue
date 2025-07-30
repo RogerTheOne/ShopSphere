@@ -3,8 +3,10 @@
 import GoodsItem from '../Home/components/GoodsItem.vue'
 import { useBanner } from './composables/useBanner'
 import { useCategory } from './composables/useCategory'
+import { translate } from '@/utils/productMap'
 const { bannerList } = useBanner()
 const { categoryData } = useCategory()
+
 
 
 </script>
@@ -32,14 +34,14 @@ const { categoryData } = useCategory()
           <li v-for="i in categoryData.children" :key="i.id">
             <RouterLink :to="`/category/sub/${i.id}`">
               <img :src="i.picture" />
-              <p>{{ i.name }}</p>
+              <p>{{ translate(i.name) }}</p>
             </RouterLink>
           </li>
         </ul>
       </div>
       <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
         <div class="head">
-          <h3>- {{ item.name }}-</h3>
+          <h3>- {{ translate(item.name) }}-</h3>
         </div>
         <div class="body">
           <GoodsItem v-for="good in item.goods" :goods="good" :key="good.id" />

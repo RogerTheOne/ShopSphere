@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useCategoryStore } from '@/stores/category'
 import { onMounted } from 'vue'
+import { translate } from '@/utils/productMap'
 
 const categoryStore = useCategoryStore()
 
@@ -15,7 +16,7 @@ onMounted(() => {
     <ul class="menu">
       <li v-for="item in categoryStore.categoryList" :key="item.id">
         <!-- 一级分类 -->
-        <RouterLink to="/">{{ item.name }}</RouterLink>
+        <RouterLink to="/">{{ translate(item.name) }}</RouterLink>
 
         <!-- 弹层 layer -->
         <div class="layer">

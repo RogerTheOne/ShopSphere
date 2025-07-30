@@ -1,5 +1,6 @@
-
 <script setup>
+import { translate } from '@/utils/productMap'
+
 defineProps({
   goods: {
     type: Object,
@@ -11,8 +12,8 @@ defineProps({
 <template>
   <RouterLink to="/" class="goods-item">
     <img :src="goods.picture" alt="" />
-    <p class="name ellipsis">{{ goods.name }}</p>
-    <p class="desc ellipsis">{{ goods.desc }}</p>
+    <p class="name ellipsis">{{ translate(goods.name) }}</p>
+    <p class="desc ellipsis">{{ translate(goods.desc) }}</p>
     <p class="price">${{ goods.price }}</p>
   </RouterLink>
 </template>
