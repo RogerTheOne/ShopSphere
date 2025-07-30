@@ -1,5 +1,12 @@
 <script setup>
 // 图片列表
+
+defineProps({
+    imageList: {
+        type:Array,
+        default:() => []
+    }
+})
 const imageList = [
   "https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png",
   "https://yanxuan-item.nosdn.127.net/e801b9572f0b0c02a52952b01adab967.jpg",
@@ -70,7 +77,7 @@ const mouseEnterFn = (i) => curIndex.value = i
   .layer {
     width: 200px;
     height: 200px;
-    background: rgba(0, 0, 0, 0.2);
+    
     // 绝对定位 然后跟随咱们鼠标控制left和top属性就可以让滑块移动起来
     left: 0;
     top: 0;
