@@ -10,25 +10,25 @@ import img4 from '@/assets/images/fresh4.jpg'
 // 映射表（中文 → 英文）
 const newList = [
   {
-    id: 1,
+    id: 4027998,
     picture: img1,
-    name: 'Vintage Computer 70s',
-    price: '$149.00'
+    name: 'Cleaning Sponge',
+    price: '$2.99'
   },
   {
-    id: 2,
+    id: 4023638,
     picture: img2,
     name: 'Nike Runner 2025',
     price: '$219.00'
   },
   {
-    id: 3,
+    id: 3994572,
     picture: img3,
     name: 'PlayStation Controller',
     price: '$69.90'
   },
   {
-    id: 4,
+    id: 4026116,
     picture: img4,
     name: 'IPhone',
     price: '$1199.00'
