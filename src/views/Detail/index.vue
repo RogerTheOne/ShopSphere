@@ -4,6 +4,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router'
 import DetailHot from './components/DetailHot.vue';
 import ImageView from '@/components/imageView/index.vue'
+import Sku from '@/components/XtxSku/index.vue'
 
 
 const goods = ref({})
@@ -88,6 +89,7 @@ onMounted(() => getGoods())
                 </dl>
               </div>
               <!-- sku组件 -->
+              <Sku :goods="goods"/>
 
               <!-- 数据组件 -->
 

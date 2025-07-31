@@ -61,7 +61,7 @@ onMounted(() => {
     width: 200px;
     height: 80px;
     background: url("@/assets/images/logo.png") no-repeat right 2px;
-    background-size: 160px auto;
+    background-size: 110px auto;
   }
 
   .right {
