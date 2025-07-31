@@ -1,132 +1,173 @@
 <script setup>
-import { getDetail } from '@/apis/detail';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import DetailHot from './components/DetailHot.vue';
+import { useI18n } from 'vue-i18n'
+import { useTranslate } from '@/ i18n/useTranslate'
+import { getDetail } from '@/apis/detail'
+
+import DetailHot from './components/DetailHot.vue'
 import ImageView from '@/components/imageView/index.vue'
 import Sku from '@/components/XtxSku/index.vue'
 
-
 const goods = ref({})
 const route = useRoute()
+const { t } = useI18n()
+const { translate } = useTranslate()
+const { locale } = useI18n()
 
 const getGoods = async () => {
   const res = await getDetail(route.params.id)
+  console.log('res:', res)
   goods.value = res.result
 }
+
 onMounted(() => getGoods())
 
+// ✅ 一定要放在 onMounted 后面，确保 locale 正确引用
+const translateSafe = (text) => {
+  const zhToEnMap = {
+    '抓绒保暖，毛毛虫儿童运动鞋26-30': 'Fleece Warm Caterpillar Shoes for Kids 26-30',
+    '宝贝上脚活力出街': 'Caterpillar Sports Shoes for Kids',
+    '12月好物放送，App领券购买直降120元': 'December Deals, Save ¥120 with App Coupon',
+    '无忧退货': 'Free Returns',
+    '快速退款': 'Fast Refunds',
+    '免费包邮': 'Free Shipping',
+    '了解详情': 'Learn More',
+    '销量人气': 'Sales Volume',
+    '商品评价': 'Product Reviews',
+    '收藏人气': 'Favorites',
+    '品牌信息': 'Brand Info',
+    '商品详情': 'Product Details',
+    '加入购物车': 'Add to Cart',
+    '适用年龄': 'Suitable Age',
+    '适用场景': 'Suitable Scene',
+    '适用季节': 'Seasons',
+    '质量等级': 'Quality Level',
+    '合格品': 'Qualified'
+  }
+
+  if (typeof text === 'string') {
+    const cleaned = text.trim()
+    return locale.value.startsWith('en') ? zhToEnMap[cleaned] || cleaned : cleaned
+  }
+
+  return ''
+}
 </script>
 
 <template>
   <div class="xtx-goods-page">
     <div class="container" v-if="goods.details">
+      <!-- 面包屑导航 -->
       <div class="bread-container">
         <el-breadcrumb separator=">">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: `/category/${goods.categories?.[1].id}` }">{{ goods.categories[1].name }}
+          <el-breadcrumb-item :to="{ path: '/' }">{{ t('home') }}</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: `/category/${goods.categories?.[1].id}` }">
+            {{ translateSafe(goods.categories?.[1].name) }}
           </el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: `/category/sub/${goods.categories?.[0].id}` }">{{
-            goods.categories[0].name
-          }}
+          <el-breadcrumb-item :to="{ path: `/category/sub/${goods.categories?.[0].id}` }">
+            {{ translateSafe(goods.categories?.[0].name) }}
           </el-breadcrumb-item>
-          <el-breadcrumb-item>{{goods.name}}</el-breadcrumb-item>
+          <el-breadcrumb-item>
+            {{ translateSafe(goods.name) }}
+          </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
+
       <!-- 商品信息 -->
       <div class="info-container">
         <div>
           <div class="goods-info">
+            <!-- 左图 -->
             <div class="media">
-              <!-- 图片预览区 -->
-              <ImageView :image-list="goods.mainPictures"/>
-
-              <!-- 统计数量 -->
+              <ImageView :image-list="goods.mainPictures" />
               <ul class="goods-sales">
                 <li>
-                  <p>销量人气</p>
-                  <p> {{ goods.salesCount }} </p>
-                  <p><i class="iconfont icon-task-filling"></i>销量人气</p>
+                  <p>{{ t('sales') }}</p>
+                  <p>{{ goods.salesCount }}</p>
+                  <p><i class="iconfont icon-task-filling"></i>{{ t('sales') }}</p>
                 </li>
                 <li>
-                  <p>商品评价</p>
+                  <p>{{ t('comments') }}</p>
                   <p>{{ goods.commentCount }}</p>
-                  <p><i class="iconfont icon-comment-filling"></i>查看评价</p>
+                  <p><i class="iconfont icon-comment-filling"></i>{{ t('comments') }}</p>
                 </li>
                 <li>
-                  <p>收藏人气</p>
+                  <p>{{ t('favorite') }}</p>
                   <p>{{ goods.collectCount }}</p>
-                  <p><i class="iconfont icon-favorite-filling"></i>收藏商品</p>
+                  <p><i class="iconfont icon-favorite-filling"></i>{{ t('favorite') }}</p>
                 </li>
                 <li>
-                  <p>品牌信息</p>
-                  <p>{{ goods.brand.name }}</p>
-                  <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
+                  <p>{{ t('brand') }}</p>
+                  <p>{{ goods.brand.nameEn || translate(goods.brand.name) }}</p>
+                  <p><i class="iconfont icon-dynamic-filling"></i>{{ t('brand') }}</p>
                 </li>
               </ul>
             </div>
+
+            <!-- 右侧规格 -->
             <div class="spec">
-              <!-- 商品信息区 -->
-              <p class="g-name"> {{goods.name}} </p>
-              <p class="g-desc">{{ goods.desc }} </p>
+              <p class="g-name">{{ translateSafe(goods.name) }}</p>
+              <p class="g-desc">{{ translateSafe(goods.desc) }}</p>
               <p class="g-price">
-                <span>{{goods.oldPrice}}</span>
-                <span> {{ goods.price }}</span>
+                <span>{{ goods.oldPrice }}</span>
+                <span>{{ goods.price }}</span>
               </p>
+
+              <!-- 服务 -->
               <div class="g-service">
                 <dl>
-                  <dt>促销</dt>
-                  <dd>12月好物放送，App领券购买直降120元</dd>
+                  <dt>{{ t('promo') }}</dt>
+                  <dd>{{ translateSafe('12月好物放送，App领券购买直降120元') }}</dd>
                 </dl>
                 <dl>
-                  <dt>服务</dt>
+                  <dt>{{ t('service') }}</dt>
                   <dd>
-                    <span>无忧退货</span>
-                    <span>快速退款</span>
-                    <span>免费包邮</span>
-                    <a href="javascript:;">了解详情</a>
+                    <span>{{ translateSafe('无忧退货') }}</span>
+                    <span>{{ translateSafe('快速退款') }}</span>
+                    <span>{{ translateSafe('免费包邮') }}</span>
+                    <a href="javascript:;">{{ t('learnMore') }}</a>
                   </dd>
                 </dl>
               </div>
-              <!-- sku组件 -->
-              <Sku :goods="goods"/>
 
-              <!-- 数据组件 -->
+              <!-- SKU -->
+              <Sku :goods="goods" />
 
-              <!-- 按钮组件 -->
+              <!-- 按钮 -->
               <div>
                 <el-button size="large" class="btn">
-                  加入购物车
+                  {{ t('addToCart') }}
                 </el-button>
               </div>
-
             </div>
           </div>
+
+          <!-- 底部详情 -->
           <div class="goods-footer">
             <div class="goods-article">
-              <!-- 商品详情 -->
               <div class="goods-tabs">
                 <nav>
-                  <a>商品详情</a>
+                  <a>{{ t('detail') }}</a>
                 </nav>
                 <div class="goods-detail">
                   <!-- 属性 -->
                   <ul class="attrs">
-                    <li v-for="item in goods.details.properties" :key="item.value">
-                      <span class="dt">{{ item.name }}</span>
-                      <span class="dd">{{ item.value }}</span>
+                    <li v-for="item in goods.details.properties" :key="item.name">
+                      <span class="dt">{{ translate(item.name) }}</span>
+                      <span class="dd">{{ translate(item.value) }}</span>
                     </li>
                   </ul>
                   <!-- 图片 -->
-                  <img v-for="img in goods.details.pictures" :src="img" :key="img" alt=""></img>
+                  <img v-for="img in goods.details.pictures" :src="img" :key="img" alt="" />
                 </div>
               </div>
             </div>
-            <!-- 24热榜+专题推荐 -->
-            <div class="goods-aside">
-              <DetailHot :hot-type = "1"/>
-              <DetailHot :hot-type = "2"/>
 
+            <!-- 右侧热榜推荐 -->
+            <div class="goods-aside">
+              <DetailHot :hot-type="1" />
+              <DetailHot :hot-type="2" />
             </div>
           </div>
         </div>
@@ -134,6 +175,7 @@ onMounted(() => getGoods())
     </div>
   </div>
 </template>
+
 
 
 <style scoped lang='scss'>
