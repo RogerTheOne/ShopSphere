@@ -43,7 +43,12 @@ const translateSafe = (text) => {
     '适用场景': 'Suitable Scene',
     '适用季节': 'Seasons',
     '质量等级': 'Quality Level',
-    '合格品': 'Qualified'
+    '合格品': 'Qualified',
+    '颜色': 'Color',
+    '尺码': 'Size',
+    '春、冬、秋': 'Spring, Winter, Autumn',
+    '6-9岁、3-6岁': '6–9 years, 3–6 years',
+    '不限场景': 'Any scene'
   }
 
   if (typeof text === 'string') {
@@ -62,12 +67,7 @@ const translateSafe = (text) => {
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">{{ t('home') }}</el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: `/category/${goods.categories?.[1].id}` }">
-            {{ translateSafe(goods.categories?.[1].name) }}
-          </el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: `/category/sub/${goods.categories?.[0].id}` }">
-            {{ translateSafe(goods.categories?.[0].name) }}
-          </el-breadcrumb-item>
+          
           <el-breadcrumb-item>
             {{ translateSafe(goods.name) }}
           </el-breadcrumb-item>
@@ -154,8 +154,8 @@ const translateSafe = (text) => {
                   <!-- 属性 -->
                   <ul class="attrs">
                     <li v-for="item in goods.details.properties" :key="item.name">
-                      <span class="dt">{{ translate(item.name) }}</span>
-                      <span class="dd">{{ translate(item.value) }}</span>
+                      <span class="dt">{{ translateSafe(item.name) }}</span>
+                      <span class="dd">{{ translateSafe(item.value) }}</span>
                     </li>
                   </ul>
                   <!-- 图片 -->
