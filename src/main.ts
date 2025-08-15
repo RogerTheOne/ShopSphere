@@ -2,7 +2,8 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { lazyPlugin } from '@/directives'
 import { createI18n } from 'vue-i18n'
-import messages from '@/ i18n/index'   // ✅ 删除路径中多余空格
+import messages from '@/ i18n/index'   
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 
 import App from './App.vue'
@@ -15,20 +16,22 @@ getCategoryAPI().then((res: any) => {
   console.log(res)
 })
 
-// ✅ 创建 i18n 实例并强制语言为英文（可换成 localStorage 持久化）
+
 const i18n = createI18n({
   legacy: false,
   globalInjection: true,
-  locale: 'en-US',               // ✅ 注意这里要匹配 messages 的 key
+  locale: 'en-US',               
   fallbackLocale: 'zh-CN',
   messages
 } as any)
 
-// ✅ 创建 app 并依次挂载插件
-const app = createApp(App)
 
-app.use(createPinia())
+const app = createApp(App)
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+
+app.use(pinia)
 app.use(router)
 app.use(i18n)
 app.use(lazyPlugin)
-app.mount('#app')  // ⬅️ mount 最后执行
+app.mount('#app')  
