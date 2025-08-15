@@ -5,9 +5,24 @@ interface LoginParams {
   account: string
   password: string
 }
+interface UserInfo {
+  id: string
+  account: string
+  mobile: string
+  avatar: string
+  birthday: string
+  cityCode: string
+  gender: string
+  nickname: string
+  profession: string
+  provinceCode: string
+  token: string
+}
+
 
 // 定义响应数据类型（可根据实际接口返回结构补充）
 interface LoginResponse {
+  result: UserInfo | { id: string; account: string; mobile: string; avatar: string; birthday: string; cityCode: string; gender: string; nickname: string; profession: string; provinceCode: string; token: string } | null
   token: string
   userInfo: {
     id: string
