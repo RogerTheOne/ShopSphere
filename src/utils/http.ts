@@ -1,5 +1,5 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios'
-
+import { useUserStore } from '@/stores/user'
 // 创建 Axios 实例
 const http: AxiosInstance = axios.create({
   baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
@@ -12,6 +12,11 @@ import type { InternalAxiosRequestConfig } from 'axios'
 
 http.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    const userSrore = useUserStore()
+    const token = userSrore.userInfo?.token
+    if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+    }
     return config
   },
   (error) => Promise.reject(error)
