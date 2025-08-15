@@ -1,9 +1,13 @@
 <script setup>
 import { ref } from 'vue'
-// 表单数据对象
+import {loginAPI} from '@/apis/user'
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+import { useRouter } from 'vue-router'
+
 const form = ref({
-  account: '1311111111',
-  password: '123456',
+  account: '',
+  password: '',
   agree: true
 })
 
@@ -19,10 +23,26 @@ const rules = {
   agree: [
     {
       validator: (rule, val, callback) => {
-        return val ? callback() : new Error('请先同意协议')
+        return val ? callback() : new Error('Please agree the policy')
       }
     }
   ]
+}
+
+const formRef = ref(null)
+const router = useRouter()
+const doLogin = () => {
+  const { account, password } = form.value
+  // 调用实例方法
+  formRef.value.validate(async (valid) => {
+    // valid: 所有表单都通过校验  才为true
+    console.log(valid)
+    if (valid) {
+      await loginAPI({ account, password })
+      ElMessage({ type: 'success', message: 'Sign In Success' })
+      router.replace({ path: '/' })
+    }
+  })
 }
 
 </script>
@@ -49,7 +69,7 @@ const rules = {
         </nav>
         <div class="account-box">
           <div class="form">
-            <el-form :model="form" :rules="rules" label-position="right" label-width="60px"
+            <el-form ref="formRef" :model="form" :rules="rules" label-position="right" label-width="60px"
               status-icon>
               <el-form-item prop="account"  label="Account">
                 <el-input v-model="form.account" />
@@ -57,12 +77,12 @@ const rules = {
               <el-form-item prop="password" label="Password">
                 <el-input v-model="form.password"/>
               </el-form-item>
-              <el-form-item label-width="22px">
-                <el-checkbox  size="large">
-                  I have agreed 
+              <el-form-item prop="agree" label-width="22px">
+                <el-checkbox v-model="form.agree" size="large">
+                  I have agreed the policy
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">Sign In</el-button>
+              <el-button size="large" class="subBtn" @click="doLogin">Sign In</el-button>
             </el-form>
           </div>
         </div>
