@@ -49,9 +49,14 @@ export const useUserStore = defineStore('user', () => {
     userInfo.value = res.result
   }
 
+  const clearUserInfo = () =>{
+    userInfo.value = null
+  }
+
   return {
     userInfo,
-    getUserInfo
+    getUserInfo,
+    clearUserInfo
   }
 },{
   persist:true
