@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useCategoryStore } from '@/stores/category'
+import HeaderCart from './HeaderCart.vue'
 
 const categoryStore = useCategoryStore()
 
@@ -28,6 +29,8 @@ onMounted(() => {
         <i class="iconfont icon-search"></i>
         <input type="text" placeholder="Search">
       </div>
+      <HeaderCart />
+
     </div>
   </header>
 </template>
