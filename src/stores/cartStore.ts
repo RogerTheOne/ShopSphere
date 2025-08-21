@@ -1,0 +1,42 @@
+
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+
+// 1. 定义购物车商品类型
+export interface CartItem {
+  id: number
+  skuId: number
+  name?: string
+  price?: number
+  count: number
+  picture?: string
+  selected:true
+  [key: string]: any  // 扩展字段（根据实际需要可删）
+}
+
+export const useCartStore = defineStore('cart', () => {
+  // 2. 定义 state
+  const cartList = ref<CartItem[]>([])
+
+  // 3. 定义 action
+  const addCart = (goods: CartItem) => {
+    console.log('添加', goods)
+    const item = cartList.value.find((item) => goods.skuId === item.skuId)
+    if (item) {
+      item.count++
+    } else {
+      // 如果没有 count 字段默认设为 1
+      cartList.value.push({
+        ...goods,
+        count: goods.count || 1
+      })
+    }
+  }
+
+  return {
+    cartList,
+    addCart
+  }
+}, {
+  persist: true  // pinia-plugin-persistedstate 插件持久化
+})

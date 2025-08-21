@@ -4,8 +4,8 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 const userStore = useUserStore()
 const confirm = () =>{
-console.log('用户要退出登录了')
-  
+console.log('Account want to sign out')
+
   userStore.clearUserInfo()
   router.push('/login')
 }

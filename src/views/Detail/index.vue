@@ -8,6 +8,12 @@ import { getDetail } from '@/apis/detail'
 import DetailHot from './components/DetailHot.vue'
 import ImageView from '@/components/imageView/index.vue'
 import Sku from '@/components/XtxSku/index.vue'
+import { ElMessage } from 'element-plus'
+
+import { useCartStore } from '@/stores/cartStore'
+const cartStore = useCartStore()
+
+
 
 const goods = ref({})
 const route = useRoute()
@@ -23,7 +29,38 @@ const getGoods = async () => {
 
 onMounted(() => getGoods())
 
-// ✅ 一定要放在 onMounted 后面，确保 locale 正确引用
+const skuObj =ref({})
+const skuChange = (sku) => {
+  console.log('选中的sku：', sku)
+  skuObj.value = sku
+}
+
+const count = ref(1)
+const countChange = (count) =>{
+  console.log(count)
+}
+
+const addToCart = () => {
+  console.log(skuObj.skuId)
+  if (skuObj.value.skuId){
+    cartStore.addCart({
+      id: goods.value.id,
+      name: goods.value.name,
+      picture: goods.value.mainPictures[0],
+      price: goods.value.price,
+      count: count.value,
+      skuId: skuObj.value.skuId,
+      attrsText: skuObj.value.specsText,
+      selected: true
+      
+    })
+  }else{
+    ElMessage.warning('Please make selection first')
+  }
+}
+
+
+
 const translateSafe = (text) => {
   const zhToEnMap = {
     '抓绒保暖，毛毛虫儿童运动鞋26-30': 'Fleece Warm Caterpillar Shoes for Kids 26-30',
@@ -132,11 +169,12 @@ const translateSafe = (text) => {
               </div>
 
               <!-- SKU -->
-              <Sku :goods="goods" />
+              <Sku :goods="goods" @change="skuChange"/>
+              <el-input-number v-model="count" @change = "countChange" />
 
               <!-- 按钮 -->
               <div>
-                <el-button size="large" class="btn">
+                <el-button size="large" class="btn" @click="addToCart">
                   {{ t('addToCart') }}
                 </el-button>
               </div>

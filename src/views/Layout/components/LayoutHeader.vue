@@ -60,14 +60,14 @@ onMounted(() => {
     padding-left: 40px;
     position: relative;
     z-index: 998;
-    width: auto; /* ✅ 让它根据内容自适应 */
-    margin-right: 40px; /* ✅ 给 search 预留间距 */
+    width: auto; 
+    margin-right: 40px; 
   
     li {
       margin-right: 40px;
-      width: auto; // ✅ 删除固定宽度
+      width: auto; 
       text-align: center;
-      white-space: nowrap; // ✅ 防止英文换行
+      white-space: nowrap; 
   
       a {
         font-size: 16px;
@@ -89,21 +89,21 @@ onMounted(() => {
   }
 
   .search {
-    width: 200px; /* ✅ 给足空间 */
+    width: 200px; 
     height: 32px;
     position: relative;
     border-bottom: 1px solid #e7e7e7;
-    display: flex; /* ✅ 改用 flex 对齐图标和输入框 */
+    display: flex; 
     align-items: center;
 
     .icon-search {
       font-size: 18px;
       margin-left: 5px;
-      margin-right: 5px; /* ✅ 给 input 留空间 */
+      margin-right: 5px; 
     }
 
     input {
-      flex: 1; /* ✅ 自动填充剩余空间 */
+      flex: 1; 
       border: none;
       outline: none;
       font-size: 14px;
