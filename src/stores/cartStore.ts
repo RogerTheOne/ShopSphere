@@ -50,6 +50,9 @@ export const useCartStore = defineStore('cart', () => {
 
   const allCheck = (selected: boolean) => cartList.value.forEach(item => item.selected === selected)
   const isAll = computed(() => cartList.value.every((item) => item.selected))
+
+  const selectedCount = computed(() => cartList.value.filter(item => item.selected).reduce((a, c) => a+c.count, 0))
+  const selectedPrice = computed(() => cartList.value.filter(item => item.selected).reduce((a, c) => a + c.count * c.price, 0))
   return {
     cartList,
     addCart,
@@ -58,7 +61,9 @@ export const useCartStore = defineStore('cart', () => {
     delCart,
     singleCheck,
     isAll,
-    allCheck
+    allCheck,
+    selectedCount,
+    selectedPrice
   }
 }, {
   persist: true  // pinia-plugin-persistedstate 插件持久化

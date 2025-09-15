@@ -7,6 +7,10 @@ const singleCheck = (i, selected) => {
   // 除了selected补充一个用来筛选的参数 - skuId
   cartStore.singleCheck(i.skuId, selected)
 }
+
+const allCheck = (selected) =>{
+  cartStore.allCheck(selected)
+}
 </script>
 
 <template>
@@ -19,11 +23,11 @@ const singleCheck = (i, selected) => {
               <th width="120">
                 <el-checkbox :model-value="cartStore.isAll" @change="allCheck" />
               </th>
-              <th width="400">商品信息</th>
-              <th width="220">单价</th>
-              <th width="180">数量</th>
-              <th width="180">小计</th>
-              <th width="140">操作</th>
+              <th width="400">Info</th>
+              <th width="220">Price</th>
+              <th width="180">Count</th>
+              <th width="180">Total</th>
+              <th width="140">Operation</th>
             </tr>
           </thead>
           <!-- 商品列表 -->
@@ -53,9 +57,9 @@ const singleCheck = (i, selected) => {
               </td>
               <td class="tc">
                 <p>
-                  <el-popconfirm title="确认删除吗?" confirm-button-text="确认" cancel-button-text="取消" @confirm="delCart(i)">
+                  <el-popconfirm title="确认删除吗?" confirm-button-text="Yes" cancel-button-text="No" @confirm="delCart(i)">
                     <template #reference>
-                      <a href="javascript:;">删除</a>
+                      <a href="javascript:;">Delete</a>
                     </template>
                   </el-popconfirm>
                 </p>
@@ -77,11 +81,11 @@ const singleCheck = (i, selected) => {
       <!-- 操作栏 -->
       <div class="action">
         <div class="batch">
-          共 10 件商品，已选择 2 件，商品合计：
-          <span class="red">¥ 200.00 </span>
+          A total of {{ cartStore.allCount }}, you have selected {{cartStore.selectedCount }}item, total is：
+          <span class="red">$ {{cartStore.selectedPrice}} </span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary" >下单结算</el-button>
+          <el-button size="large" type="primary" >Pay</el-button>
         </div>
       </div>
     </div>
