@@ -10,7 +10,7 @@ export interface CartItem {
   price?: number
   count: number
   picture?: string
-  selected:boolean
+  selected:true
   [key: string]: any  
 }
 
@@ -47,13 +47,18 @@ export const useCartStore = defineStore('cart', () => {
 
   const allCount = computed(() => cartList.value.reduce((a, c) => a+ c.count, 0))
   const allPrice = computed(() => cartList.value.reduce((a, c) => a+ c.count * c.price, 0))
+
+  const allCheck = (selected: boolean) => cartList.value.forEach(item => item.selected === selected)
+  const isAll = computed(() => cartList.value.every((item) => item.selected))
   return {
     cartList,
     addCart,
     allCount,
     allPrice,
     delCart,
-    singleCheck
+    singleCheck,
+    isAll,
+    allCheck
   }
 }, {
   persist: true  // pinia-plugin-persistedstate 插件持久化
