@@ -10,7 +10,7 @@ export interface CartItem {
   price?: number
   count: number
   picture?: string
-  selected:true
+  selected:boolean
   [key: string]: any  
 }
 
@@ -33,6 +33,12 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
+  const singleCheck = (skuId: number, selected: boolean) => {
+  // 通过skuId找到要修改的那一项 然后把它的selected修改为传过来的selected
+  const item = cartList.value.find((item) => item.skuId === skuId)
+  item.selected = selected
+}
+
   const delCart = async (skuId: number) => {
      
       const idx = cartList.value.findIndex((item) => skuId === item.skuId)
@@ -46,7 +52,8 @@ export const useCartStore = defineStore('cart', () => {
     addCart,
     allCount,
     allPrice,
-    delCart
+    delCart,
+    singleCheck
   }
 }, {
   persist: true  // pinia-plugin-persistedstate 插件持久化

@@ -11,7 +11,6 @@ onMounted(() => {
 })
 </script>
 
-
 <template>
   <div class="app-header-sticky" :class="{ show: y > 78 }">
     <div class="container">
