@@ -2,7 +2,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { useUserStore } from './user'
-import { insertCartAPI, findNewCartListAPI } from '@/apis/cart'
+import { insertCartAPI, findNewCartListAPI, delCartAPI} from '@/apis/cart'
 
 // 1. 定义购物车商品类型
 export interface CartItem {
@@ -56,8 +56,17 @@ export const useCartStore = defineStore('cart', () => {
 
   const delCart = async (skuId: number) => {
 
-    const idx = cartList.value.findIndex((item) => skuId === item.skuId)
-    cartList.value.splice(idx, 1)
+    if (isLogin.value) {
+      // 调用接口实现接口购物车中的删除功能
+      await delCartAPI([skuId])
+      findNewCartListAPI()
+    } else {
+      // 思路：
+      // 1. 找到要删除项的下标值 - splice
+      // 2. 使用数组的过滤方法 - filter
+      const idx = cartList.value.findIndex((item) => skuId === item.skuId)
+      cartList.value.splice(idx, 1)
+    }
   }
 
   const allCount = computed(() => cartList.value.reduce((a, c) => a + c.count, 0))
