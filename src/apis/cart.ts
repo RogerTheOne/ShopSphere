@@ -1,0 +1,23 @@
+import request from '@/utils/http'
+
+interface InsertCartParams {
+  skuId: number
+  count: number
+}
+
+export const insertCartAPI = ({ skuId, count }: InsertCartParams) => {
+  return request({
+    url: '/member/cart',
+    method: 'POST',
+    data: {
+      skuId,
+      count
+    }
+  })
+}
+
+export const findNewCartListAPI = () =>{
+    return request({
+        url: '/member/cart',
+    })
+}
