@@ -3,6 +3,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { loginAPI } from '@/apis/user'
+import { useCartStore } from './cartStore'
 
 const userInfo = ref<{
   id: string
@@ -42,6 +43,7 @@ export interface UserInfo {
 export const useUserStore = defineStore('user', () => {
   // 1. 定义管理用户数据的 state
   const userInfo = ref<UserInfo | null>(null)
+  const cartStore = useCartStore()
 
   // 2. 定义获取接口数据的 action 函数
   const getUserInfo = async (params: LoginParams): Promise<void> => {
@@ -51,6 +53,8 @@ export const useUserStore = defineStore('user', () => {
 
   const clearUserInfo = () =>{
     userInfo.value = null
+    cartStore.clearCart()
+
   }
 
   return {

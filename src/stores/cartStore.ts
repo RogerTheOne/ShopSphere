@@ -59,7 +59,8 @@ export const useCartStore = defineStore('cart', () => {
     if (isLogin.value) {
       // 调用接口实现接口购物车中的删除功能
       await delCartAPI([skuId])
-      findNewCartListAPI()
+      const res = await findNewCartListAPI()
+      cartList.value = res.data.result
     } else {
       // 思路：
       // 1. 找到要删除项的下标值 - splice
@@ -67,6 +68,10 @@ export const useCartStore = defineStore('cart', () => {
       const idx = cartList.value.findIndex((item) => skuId === item.skuId)
       cartList.value.splice(idx, 1)
     }
+  }
+
+  const clearCart = () =>{
+
   }
 
   const allCount = computed(() => cartList.value.reduce((a, c) => a + c.count, 0))
@@ -87,7 +92,8 @@ export const useCartStore = defineStore('cart', () => {
     isAll,
     allCheck,
     selectedCount,
-    selectedPrice
+    selectedPrice,
+    clearCart
   }
 }, {
   persist: true,  // pinia-plugin-persistedstate 插件持久化
