@@ -1,6 +1,6 @@
 
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 // 1. 定义购物车商品类型
 export interface CartItem {
@@ -11,7 +11,7 @@ export interface CartItem {
   count: number
   picture?: string
   selected:true
-  [key: string]: any  // 扩展字段（根据实际需要可删）
+  [key: string]: any  
 }
 
 export const useCartStore = defineStore('cart', () => {
@@ -39,9 +39,13 @@ export const useCartStore = defineStore('cart', () => {
       cartList.value.splice(idx, 1)
   }
 
+  const allCount = computed(() => cartList.value.reduce((a, c) => a+ c.count, 0))
+  const allPrice = computed(() => cartList.value.reduce((a, c) => a+ c.count * c.price, 0))
   return {
     cartList,
     addCart,
+    allCount,
+    allPrice,
     delCart
   }
 }, {
