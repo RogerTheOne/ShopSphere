@@ -31,3 +31,13 @@ export const delCartAPI = (ids: any) => {
     }
   })
 }
+
+
+export const mergeCartAPI = (data: any) =>{
+    return request({
+        url: '/member/cart/merge',
+        method: 'POST',
+        data
+    
+    })
+}

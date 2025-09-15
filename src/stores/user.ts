@@ -3,7 +3,8 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { loginAPI } from '@/apis/user'
-import { useCartStore } from './cartStore'
+import { useCartStore} from './cartStore'
+import { mergeCartAPI } from '@/apis/cart'
 
 const userInfo = ref<{
   id: string
@@ -49,6 +50,15 @@ export const useUserStore = defineStore('user', () => {
   const getUserInfo = async (params: LoginParams): Promise<void> => {
     const res = await loginAPI(params)
     userInfo.value = res.result
+    await mergeCartAPI(cartStore.cartList.map(item =>{
+      return {
+        skuId: item.skuId,
+        selected: item.selected,
+        count: item.count
+      }
+    }))
+    cartStore.updateNewList()
+    
   }
 
   const clearUserInfo = () =>{

@@ -21,6 +21,11 @@ export const useCartStore = defineStore('cart', () => {
   const isLogin = computed(() => userStore.userInfo.token)
   // 2. 定义 state
   const cartList = ref<CartItem[]>([])
+
+  const updateNewList = async() =>{
+    const res = await findNewCartListAPI()
+    cartList.value = res.data.result
+  }
   
 
   // 3. 定义 action
@@ -93,7 +98,8 @@ export const useCartStore = defineStore('cart', () => {
     allCheck,
     selectedCount,
     selectedPrice,
-    clearCart
+    clearCart,
+    updateNewList
   }
 }, {
   persist: true,  // pinia-plugin-persistedstate 插件持久化
