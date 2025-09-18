@@ -15,10 +15,14 @@ const getCheckInfo = async() =>{
 
 onMounted(() => getCheckInfo())
 
+// control for opening the dialog
 const showDialog = ref(false)
 
-
-
+// change address
+const activeAddress = ref({})
+const switchAddress = (item) =>{
+    activeAddress.value = item
+}
 
 </script>
 
@@ -122,7 +126,7 @@ const showDialog = ref(false)
   <!-- 切换地址 -->
    <el-dialog v-model ="showDialog" title="Change Delivery Address" width="30%" center>
   <div class="addressWrapper">
-    <div class="text item" v-for="item in checkInfo.userAddresses"  :key="item.id">
+    <div class="text item" :class="{ active: activeAddress.id === item.id}" @click="switchAddress(item)" v-for="item in checkInfo.userAddresses"  :key="item.id">
       <ul>
       <li><span>Receiver：</span>{{ item.receiver }} </li>
       <li><span>Contact：</span>{{ item.contact }}</li>
