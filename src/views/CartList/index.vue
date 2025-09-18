@@ -85,7 +85,7 @@ const allCheck = (selected) =>{
           <span class="red">$ {{cartStore.selectedPrice}} </span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary" >Pay</el-button>
+          <el-button size="large" type="primary" @click="$router.push('/checkout')">Pay</el-button>
         </div>
       </div>
     </div>
