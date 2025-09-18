@@ -15,6 +15,8 @@ const getCheckInfo = async() =>{
 
 onMounted(() => getCheckInfo())
 
+const showDialog = ref(false)
+
 
 
 
@@ -37,7 +39,7 @@ onMounted(() => getCheckInfo())
               </ul>
             </div>
             <div class="action">
-              <el-button size="large" @click="toggleFlag = true">Change Delivery Address</el-button>
+              <el-button size="large" @click="showDialog = true">Change Delivery Address</el-button>
               <el-button size="large" @click="addFlag = true">Add Delivery Address</el-button>
             </div>
           </div>
@@ -118,6 +120,23 @@ onMounted(() => getCheckInfo())
     </div>
   </div>
   <!-- 切换地址 -->
+   <el-dialog v-model ="showDialog" title="Change Delivery Address" width="30%" center>
+  <div class="addressWrapper">
+    <div class="text item" v-for="item in checkInfo.userAddresses"  :key="item.id">
+      <ul>
+      <li><span>Receiver：</span>{{ item.receiver }} </li>
+      <li><span>Contact：</span>{{ item.contact }}</li>
+      <li><span>Delivery Address：</span>{{ item.fullLocation + item.address }}</li>
+      </ul>
+    </div>
+  </div>
+  <template #footer>
+    <span class="dialog-footer">
+      <el-button>Cancel</el-button>
+      <el-button type="primary">Confirm</el-button>
+    </span>
+  </template>
+</el-dialog>
   <!-- 添加地址 -->
 </template>
 
